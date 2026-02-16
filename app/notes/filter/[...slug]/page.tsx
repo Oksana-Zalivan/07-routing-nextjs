@@ -6,7 +6,7 @@ import type { NoteTag } from "@/types/note";
 const PER_PAGE = 12;
 
 type PageProps = {
-  params: { tag: string[] };
+  params: { slug: string[] };
 };
 
 function normalizeTag(raw: string | undefined): NoteTag | undefined {
@@ -15,7 +15,7 @@ function normalizeTag(raw: string | undefined): NoteTag | undefined {
 }
 
 export default async function NotesByTagPage({ params }: PageProps) {
-  const tag = normalizeTag(params.tag?.[0]);
+  const tag = normalizeTag(params.slug?.[0]);
 
   const queryClient = new QueryClient();
 
@@ -30,3 +30,4 @@ export default async function NotesByTagPage({ params }: PageProps) {
     </HydrationBoundary>
   );
 }
+

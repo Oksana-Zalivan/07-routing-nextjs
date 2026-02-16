@@ -24,9 +24,10 @@ function normalizeTag(raw: string | undefined): NoteTag | undefined {
 
 export default function NotesByTagClient() {
   const params = useParams();
-  const rawTag = Array.isArray(params?.tag)
-    ? (params.tag[0] as string)
-    : (params?.tag as string | undefined);
+
+  const rawTag = Array.isArray(params?.slug)
+    ? (params.slug[0] as string)
+    : (params?.slug as string | undefined);
 
   const tag = normalizeTag(rawTag);
 
@@ -92,4 +93,5 @@ export default function NotesByTagClient() {
     </div>
   );
 }
+
 
