@@ -2,17 +2,10 @@ import type { ReactNode } from "react";
 
 export default function NotesLayout({
   children,
-  modal,
 }: {
-  children: ReactNode;
-  modal: ReactNode;
+  children: React.ReactNode;
 }) {
-  return (
-    <>
-      {children}
-      {modal}
-    </>
-  );
+  return <>{children}</>;
 }
 
 
