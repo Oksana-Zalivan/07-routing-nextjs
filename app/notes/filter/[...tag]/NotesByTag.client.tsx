@@ -13,7 +13,7 @@ import NoteForm from "@/components/NoteForm/NoteForm";
 
 import { fetchNotes } from "@/lib/api";
 import type { NoteTag } from "@/types/note";
-import css from "../page.module.css";
+import css from "./NotesPage.module.css";
 
 const PER_PAGE = 12;
 

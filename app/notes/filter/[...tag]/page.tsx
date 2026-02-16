@@ -1,6 +1,6 @@
 import { HydrationBoundary, dehydrate, QueryClient } from "@tanstack/react-query";
 import NotesByTagClient from "./NotesByTag.client";
-import { fetchNotes } from "@/lib/api"; // або "@/lib/api/notes" якщо так у тебе
+import { fetchNotes } from "@/lib/api";
 import type { NoteTag } from "@/types/note";
 
 const PER_PAGE = 12;

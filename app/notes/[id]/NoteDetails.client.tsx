@@ -7,7 +7,8 @@ import css from "./page.module.css";
 
 export default function NoteDetailsClient() {
   const params = useParams();
-  const id = params?.id as string;
+  const idParam = params?.id;
+  const id = typeof idParam === "string" ? idParam : "";
 
   const { data: note, isLoading, isError } = useQuery({
     queryKey: ["note", id],
@@ -16,6 +17,7 @@ export default function NoteDetailsClient() {
     refetchOnMount: false,
   });
 
+  if (!id) return <p>Missing note id.</p>;
   if (isLoading) return <p>Loading, please wait...</p>;
   if (isError || !note) return <p>Something went wrong.</p>;
 
@@ -32,4 +34,6 @@ export default function NoteDetailsClient() {
     </div>
   );
 }
+
+
 
