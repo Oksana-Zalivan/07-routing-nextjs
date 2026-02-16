@@ -1,12 +1,12 @@
 import { HydrationBoundary, dehydrate, QueryClient } from "@tanstack/react-query";
-import NotesByTagClient from "./Notes.client";
+import NotesClient from "./Notes.client";
 import { fetchNotes } from "@/lib/api";
 import type { NoteTag } from "@/types/note";
 
 const PER_PAGE = 12;
 
 type PageProps = {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 };
 
 function normalizeTag(raw: string | undefined): NoteTag | undefined {
@@ -15,7 +15,8 @@ function normalizeTag(raw: string | undefined): NoteTag | undefined {
 }
 
 export default async function NotesByTagPage({ params }: PageProps) {
-  const tag = normalizeTag(params.slug?.[0]);
+  const { slug } = await params;
+  const tag = normalizeTag(slug?.[0]);
 
   const queryClient = new QueryClient();
 
@@ -26,8 +27,9 @@ export default async function NotesByTagPage({ params }: PageProps) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesByTagClient />
+      <NotesClient slug={slug} />
     </HydrationBoundary>
   );
 }
+
 

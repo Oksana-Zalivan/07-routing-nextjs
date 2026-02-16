@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
@@ -17,19 +16,18 @@ import css from "./NotesPage.module.css";
 
 const PER_PAGE = 12;
 
-function normalizeTag(raw: string | undefined): NoteTag | undefined {
+function normalizeTag(raw: string): NoteTag | undefined {
   if (!raw || raw === "all") return undefined;
   return raw as NoteTag;
 }
 
-export default function NotesByTagClient() {
-  const params = useParams();
+type Props = {
+  slug: string[]; 
+};
 
-  const rawTag = Array.isArray(params?.slug)
-    ? (params.slug[0] as string)
-    : (params?.slug as string | undefined);
-
-  const tag = normalizeTag(rawTag);
+export default function NotesClient({ slug }: Props) {
+  const tagValue = slug?.[0] ?? "all";
+  const tag = normalizeTag(tagValue);
 
   const [page, setPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
@@ -40,7 +38,7 @@ export default function NotesByTagClient() {
     setPage(1);
     setSearchInput("");
     setSearch("");
-  }, [tag]);
+  }, [tagValue]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setPage(1);
@@ -72,10 +70,18 @@ export default function NotesByTagClient() {
         <SearchBox value={searchInput} onChange={onSearchChange} />
 
         {totalPages > 1 && (
-          <Pagination pageCount={totalPages} page={page} onPageChange={setPage} />
+          <Pagination
+            pageCount={totalPages}
+            page={page}
+            onPageChange={setPage}
+          />
         )}
 
-        <button className={css.button} type="button" onClick={() => setIsModalOpen(true)}>
+        <button
+          className={css.button}
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+        >
           Create note +
         </button>
       </header>
@@ -93,5 +99,7 @@ export default function NotesByTagClient() {
     </div>
   );
 }
+
+
 
 
